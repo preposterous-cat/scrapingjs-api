@@ -42,13 +42,18 @@ function processData(rawData, tag, className, id) {
   let data = [];
   let match;
 
-  console.log(regex.exec(rawData));
-
   // Ekstrak dan simpan isi dari setiap elemen yang ditangkap oleh regex
   while ((match = regex.exec(rawData)) !== null) {
-    const cleanText = match[1].replace(/\n/g, " ").replace(/\s+/g, " ").trim();
+    const cleanText = removeHtmlTags(
+      match[1].replace(/\n/g, " ").replace(/\s+/g, " ").trim()
+    );
     data.push(cleanText);
   }
 
   return data;
+}
+
+// Fungsi untuk menghapus tag HTML
+function removeHtmlTags(str) {
+  return str.replace(/<[^>]*>/g, "");
 }
